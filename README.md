@@ -4,7 +4,27 @@
 
 - Dockerfile                     
 ```
-ds
+RUN mkdir /var/lib/elastic && \
+    chmod -R 777 /var/lib/elastic && \
+    cd /opt && \
+#    yum update -y &&\
+    yum install perl-Digest-SHA -y && \
+    shasum -a 512 -c elasticsearch-7.14.0-linux-x86_64.tar.gz.sha512 && \
+    tar -xzf elasticsearch-7.14.0-linux-x86_64.tar.gz && \
+    groupadd elasticsearch && useradd -c "elasticsearch" -g elasticsearch elasticsearch && \
+    mkdir /opt/elasticsearch-7.14.0/snapshots && \
+    chown -R elasticsearch:elasticsearch /opt/elasticsearch-7.14.0 && \
+    echo '-Xms1g' >> /opt/elasticsearch-7.14.0/config/jvm.options && \
+    echo '-Xmx1g' >> /opt/elasticsearch-7.14.0/config/jvm.options && \
+    echo "max_map_count  =  262144" >> /etc/sysctl.conf && \
+    cd elasticsearch-7.14.0/
+   
+COPY elasticsearch.yml /opt/elasticsearch-7.14.0/config
+USER elasticsearch         
+WORKDIR /opt/elasticsearch-7.14.0/
+EXPOSE 9200 9300
+ENTRYPOINT ["bin/elasticsearch"]
+
 ```                       
 - docker hub                  
   ![](https://github.com/dAmp1r/Database_Administration_for_DevOps_Engineers_HW_5/blob/main/11.png)     
