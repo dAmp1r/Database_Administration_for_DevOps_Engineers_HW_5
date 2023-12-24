@@ -26,7 +26,8 @@ EXPOSE 9200 9300
 ENTRYPOINT ["bin/elasticsearch"]
 
 ```                       
-- docker hub                  
+- docker hub https://hub.docker.com/r/damp1r/my_study_rep/tags
+                   
   ![](https://github.com/dAmp1r/Database_Administration_for_DevOps_Engineers_HW_5/blob/main/11.png)     
 
 Задание 2.
